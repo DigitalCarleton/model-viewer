@@ -11,7 +11,7 @@
   </head>
   <body>
     <!-- <model-viewer> HTML element -->
-    <model-viewer bounds="tight" enable-pan src="horse_updated.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls environment-image="neutral" poster="poster.webp" shadow-intensity="1">
+    <model-viewer bounds="tight" enable-pan src="horse.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls environment-image="neutral" poster="poster.webp" shadow-intensity="1">
       <div class="progress-bar hide" slot="progress-bar">
           <div class="update-bar"></div>
       </div>
@@ -25,5 +25,19 @@
     <script src="script.js"></script>
     <!-- Loads <model-viewer> for browsers: -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!-- Allows for multiple models to be loaded.
+         Place model and poster in models/ subdirectory with same <model-name>, e.g.
+            models/horse.glb 
+            models/horse.webp
+         Load by appending ?model=<model-name>, e.g. 
+            mywebsite.com/model-viewer/?model=horse-->
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        const model = urlParams.get("model");
+        const mv = document.querySelector("model-viewer");
+        // console.log(model);
+        mv.setAttribute("src", "models/" + model + ".glb");
+        mv.setAttribute("poster", "models/" + model + ".webp");
+    </script>
   </body>
 </html>
